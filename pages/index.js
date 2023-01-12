@@ -1,20 +1,24 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 import Date from '../components/date';
 import { getSortedPostsData } from '../lib/posts';
+import { getSortedSubsData } from '../lib/subs';
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
+  const allSubsData = await getSortedSubsData();
   return {
     props: {
       allPostsData,
+      allSubsData,
     },
   };
 }
 
-export default function Home({ allPostsData }) {
+export default function Home({ allPostsData, allSubsData }) {
   return (
     <Layout home>
       <Head>
@@ -38,6 +42,26 @@ export default function Home({ allPostsData }) {
               <small className={utilStyles.lightText}>
                 <Date dateString={date} />
               </small>
+            </li>
+          ))}
+        </ul>
+      </section>
+      {/* Add this <section> tag below the existing <section> tag */}
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Subscribers</h2>
+        <ul className={utilStyles.list}>
+          {allSubsData.map(({ login, name, picture }) => (
+            <li className={utilStyles.listItem} key={login.uuid}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Image
+                  priority
+                  src={picture.medium}
+                  height={50}
+                  width={50}
+                  alt=""
+                />
+                <Link href={`/subs/${login.uuid}`}>{name.first} {name.last}</Link>
+              </div>
             </li>
           ))}
         </ul>
