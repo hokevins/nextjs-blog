@@ -26,6 +26,7 @@ export default function Home({ allPostsData, allSubsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>From professional dancer to software engineer, I’m interested in ways technology can help humans be more human. Currently working in the FinTech space.</p>
+        <em>THIS IS A TEST CHANGE FOR VERCEL.</em>
         <p>
           (This is a sample website - you’ll be building a site like this on{' '}
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
